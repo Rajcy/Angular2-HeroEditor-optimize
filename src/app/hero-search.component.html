@@ -1,0 +1,13 @@
+    <!--从服务端，按名字查询英雄的信息-->
+    <!--这里返回的heroes是Observable，而不再是英雄数组,*ngFor不能用可观察对象Observable做任何事，除非我们在它后面跟一个async pipe (AsyncPipe)。 这个async管道会订阅到这个可观察对象，并且为*ngFor生成一个英雄数组。-->
+
+    <!--当用户在搜索框中输入时，一个 keyup 事件绑定会调用该组件的search()方法，并传入新的搜索框的值。-->
+    <div id="search-component">
+      <h4>Hero Search</h4>
+      <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+      <div>
+        <div *ngFor="let hero of heroes | async" (click)="gotoDetail(hero)" class="search-result">
+          {{hero.name}}
+        </div>
+      </div>
+    </div>

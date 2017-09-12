@@ -1,0 +1,17 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+
+  <a *ngFor="let hero of heroes" [routerLink]="['/detail',hero.id]" class="col-1-4">
+    <div class="module hero">
+      <h4>{{hero.name}}</h4>
+    </div>
+  </a>
+
+</div>
+<!--[routerLink]绑定,有可能是 AppComponent模板中的顶级导航有一些路由器链接被设置固定的路径，例如“/dashboard”和“/heroes”-->
+<!--也有可能是绑定了一个包含链接参数数组的表达式。 该数组有两个元素，目标路由和一个用来设置当前英雄的id值的路由参数。
+这两个数组项与之前在app.module.ts添加的参数化的英雄详情路由定义中的 path 和 :id 对应。-->
+
+
+<!--英雄搜索-->
+<hero-search></hero-search>

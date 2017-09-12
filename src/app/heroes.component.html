@@ -1,0 +1,59 @@
+    <!--展示简单数据绑定================================================-->
+    <h1>{{title}}</h1>
+    <h3>They're {{number}}--{{type}}</h3>
+    <ul>
+      <li *ngFor="let hero of heros"> {{hero}} from arry Hero</li>
+    </ul>
+    <hr />
+
+
+    <!--展示用类进行数据绑定 ========================================== -->
+    <h2>{{firstHero.name}} from class Hero</h2>
+    <!--4 多行模板时添加到HTML-->
+    <div>
+      <label>id: </label>{{firstHero.id}}</div>
+    <div>
+      <label>name: </label>{{firstHero.name}}</div>
+    <!--双向数据绑定 ngModel属于一个可选模块FormsModule,需进入app.module.ts进行引用-->
+    <div>
+      <label>Input-name: </label>
+      <input [(ngModel)]="firstHero.name" placeholder="Hero's name">
+    </div>
+    <hr />
+
+    <!--从服务中获取英雄信息，并且添加绑定事件，英雄详情页的跳转================================-->
+    <!--5 显示英雄数组里的英雄 *ngFor-->
+    <!--6 事件绑定 (click)="onSelect(hero)-->
+    <h2>My Heroes</h2>
+    <ul class="heroes">
+      <!--点击绑定onSelect函数，传入hero实例作为参数 -->
+      <!--为点击的hero添加.selected样式，当表达式(hero === selectedHero)为true时，Angular会添加一个CSS类selected。为false时则会移除selected类-->
+      <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+        <span class="badge">{{hero.id}}</span>{{hero.name}}
+        <button class="delete" (click)="delete(hero); $event.stopPropagetion()">X</button>
+        <!-- $event.stopPropagetion(),阻止点击事件向上冒泡 — 我们并不希望触发<li>的事件处理器，否则它会选中我们要删除的这位英雄-->
+      </li>
+    </ul>
+    <hr />
+
+    <!--英雄详情组件化到hero-detail.component后=======================================================-->
+    <!--hero属性，这表示它是属性绑定表达式的目标。 我们要绑定到的目标属性必须是一个输入属性-->
+    <!--每当selectedHero变化时，HeroDetailComponent就会显示一个新的英雄。-->
+    <!-- <hero-detail [hero]="selectedHero"></hero-detail> -->
+
+    <!--此处不再显示完整的详情页，而是显示一个mini版的详情页，用户点击后，再像Dashboard一样进行跳转=======================================-->
+    <!--使用管道操作符‘ | ’ 后，加uppercase，能是英雄的名字成大写字母，还有很多这类的管道字符，通常用于格式化字符串、金额、日期和其它显示数据-->
+    <div *ngIf="selectedHero">
+      <h2>
+        {{selectedHero.name | uppercase }} is my hero
+      </h2>
+      <button (click)="gotoDetail()">View Details</button>
+    </div>
+
+    <!--添加英雄==当点击事件触发时，我们调用组件的点击处理器，然后清空这个输入框，以便用来输入另一个名字。==================-->
+    <div>
+      <label>Hero name: </label> <input #heroName/>
+      <button (click)="add(heroName.value); heroName.value=''">Add</button>
+    </div>
+
+
